@@ -103,7 +103,8 @@ class Solver(object):
                 loss = self.criterion(_output ,tar, difficult_samples=True)
 
                 average_loss += loss.data
-                print('trainning loss at (epoch %d, iteration %d) = %4f' % (epoch + 1, iteration, average_loss/(iteration+1)))
+                if iteration % 50 == 0:
+                    print('trainning loss at (epoch %d, iteration %d) = %4f' % (epoch + 1, iteration, average_loss/(iteration+1)))
 
                 self.optimizer.zero_grad()
                 loss.backward()
