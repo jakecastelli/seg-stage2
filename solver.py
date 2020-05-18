@@ -1,4 +1,3 @@
-
 from losses import multilabel_soft_margin_loss
 from model import fc_resnet50, finetune
 from prm.prm import peak_response_mapping, prm_visualize
@@ -69,7 +68,7 @@ class Solver(object):
         torch.save(state, name)
         shutil.copyfile(name,  '%s_latest.pth.tar' % (prefix_save))
 
-    def train(self, train_data_loader, train_logger, val_data_loader = None, val_logger = None,resume_iters=0 ):
+    def train(self, train_data_loader, train_logger, val_data_loader = None, val_logger = None, resume_iters=0 ):
 
         # torch.manual_seed(999)
 
@@ -81,7 +80,7 @@ class Solver(object):
         # Start training.
         print('Start training...')
         since = time.time()
-        
+
         self.model.train()  # Set model to training mode
 
 
@@ -122,14 +121,14 @@ class Solver(object):
                                 'error':average_loss},
                                 self.snapshot,'prm_', epoch)
 
-        
+
             print('training %d epoch,loss is %.4f' % ( epoch+1, average_loss))
             # TO-DO: modify learning rates.
-            
-                
+
+
         time_elapsed = time.time() - since
         print('train phrase completed in %.0fm %.0fs'% (time_elapsed // 60, time_elapsed % 60))
-    
+
 
     def inference(self,  input_var, raw_img, epoch=0, proposals=None):
         self.restore_model(epoch)
@@ -138,7 +137,7 @@ class Solver(object):
         plt.imshow(raw_img)
 
         self.model.eval()
-        
+
         # print(input_var)
 
         class_names = [
@@ -157,9 +156,8 @@ class Solver(object):
             if confidence.data[0, idx] > 0:
                 print('[class_idx: %d] %s (%.2f)' % (idx, class_names[idx], confidence[0, idx]))
 
-
         # Visual cue extraction
-        
+
         self.model.inference()
 
         visual_cues = self.model(input_var, peak_threshold=30)
@@ -183,7 +181,7 @@ class Solver(object):
                 axarr[idx + 2].imshow(prm.cpu(), cmap=plt.cm.jet)
                 axarr[idx + 2].set_title('Peak Response Map ("%s")' % (class_names[peak[1].item()]))
                 axarr[idx + 2].axis('off')
-        
+
         # Weakly supervised instance segmentation
         # predict instance masks via proposal retrieval
         instance_list = self.model(input_var, retrieval_cfg=dict(proposals=proposals, param=(0.95, 1e-5, 0.8)))

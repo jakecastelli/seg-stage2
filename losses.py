@@ -4,7 +4,7 @@ from torch import Tensor
 
 
 def cross_entropy_loss(
-    input: Tensor, 
+    input: Tensor,
     target: Tensor,
     weight: Optional[Tensor] = None,
     size_average: bool = True,
@@ -17,7 +17,7 @@ def cross_entropy_loss(
 
 
 def multilabel_soft_margin_loss(
-    input: Tensor, 
+    input: Tensor,
     target: Tensor,
     weight: Optional[Tensor] = None,
     size_average: bool = True,
@@ -35,5 +35,5 @@ def multilabel_soft_margin_loss(
         gt_label[gt_label == -1] = 0
     else:
         gt_label = target
-        
+
     return F.multilabel_soft_margin_loss(input, gt_label, weight, size_average, reduce)

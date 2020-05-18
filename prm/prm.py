@@ -7,7 +7,7 @@ from torchvision import models
 from matplotlib.colors import hsv_to_rgb
 from scipy.ndimage import center_of_mass
 
-from .models import FC_ResNet 
+from .models import FC_ResNet
 from .modules import PeakResponseMapping
 
 
@@ -29,17 +29,17 @@ def peak_response_mapping(
     """
 
     model = PeakResponseMapping(
-        backbone, 
+        backbone,
         enable_peak_stimulation = enable_peak_stimulation,
-        enable_peak_backprop = enable_peak_backprop, 
-        win_size = win_size, 
-        sub_pixel_locating_factor = sub_pixel_locating_factor, 
+        enable_peak_backprop = enable_peak_backprop,
+        win_size = win_size,
+        sub_pixel_locating_factor = sub_pixel_locating_factor,
         filter_type = filter_type)
     return model
 
 
 def prm_visualize(
-    instance_list: List[dict], 
+    instance_list: List[dict],
     class_names: Optional[List[str]]=None,
     font_scale: Union[int, float] = 1) -> Tuple[np.ndarray, np.ndarray]:
     """Prediction visualization.

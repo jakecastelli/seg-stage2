@@ -18,7 +18,7 @@ def main(args):
             config = yaml.safe_load(stream)
         except yaml.YAMLError as exc:
             print(exc)
-    
+
     train_trans = image_transform(**config['train_transform'])
     test_trans = image_transform(**config['test_transform'])
 
